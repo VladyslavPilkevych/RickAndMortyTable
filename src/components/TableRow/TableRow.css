@@ -1,0 +1,99 @@
+th,
+td {
+    padding: 12px 15px;
+    text-align: left;
+}
+
+th {
+    text-transform: uppercase;
+    font-size: 14px;
+    border-bottom: 1px solid #424345;
+}
+
+.table-row {
+    border-bottom: 1px solid #424345;
+    border-radius: 7px;
+    transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+.table-row:hover {
+    background-color: #000000;
+    transform: scale(1.01);
+}
+
+.table-row td {
+    vertical-align: middle;
+    font-size: 14px;
+    line-height: 19px;
+}
+
+.table-row td a {
+    text-decoration: underline;
+}
+
+.status {
+    position: relative;
+    display: inline-block;
+    background: none;
+    font-size: 14px;
+    font-weight: bold;
+    border-radius: 4px;
+    color: #000000CC;
+    padding: 8px 12px 8px 30px;
+    line-height: 20px;
+}
+
+.status::before {
+    position: absolute;
+    left: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #000000CC;
+    font-size: 16px;
+    line-height: 0;
+}
+
+.status-alive {
+    background-color: #67EF7B;
+}
+
+.status-alive::before {
+    content: "\2713";
+}
+
+.status-dead {
+    background-color: #FB6F6D;
+}
+
+.status-dead::before {
+    content: "\2717";
+}
+
+.status-unknown {
+    background-color: #424345;
+}
+
+.status-unknown::before {
+    content: "\003F";
+}
+
+.detail-link a {
+    color: #59ABE6;
+    text-decoration: none;
+}
+
+.detail-link a:hover {
+    text-decoration: underline;
+}
+
+.avatar {
+    width: 40px;
+    border-radius: 50%;
+    vertical-align: middle;
+    margin-right: 10px;
+}
+
+.name-cell {
+    display: flex;
+    align-items: center;
+}
