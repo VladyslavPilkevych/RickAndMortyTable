@@ -1,0 +1,124 @@
+.character-details {
+    width: 60%;
+    margin: 100px auto;
+    color: white;
+    font-family: "Montserrat", sans-serif;
+    display: flex;
+    align-items: flex-start;
+    gap: 25px;
+}
+
+.character-name-block {
+    display: flex;
+    gap: 16px;
+}
+
+.back-button {
+    font-family: "Oswald", sans-serif;
+    font-weight: 400;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 14px;
+    letter-spacing: 0.1em;
+    cursor: pointer;
+    margin-bottom: 20px;
+    position: relative;
+}
+
+.character-block {
+    display: flex;
+    flex-direction: column;
+}
+
+.back-button::before {
+    content: '\2190';
+    margin-right: 8px;
+}
+
+.character-header {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    margin-bottom: 40px;
+}
+
+.character-image {
+    width: 300px;
+    height: 300px;
+    border-radius: 1px;
+    margin-right: 20px;
+}
+
+.character-info {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+.character-info h1 {
+    margin: 0;
+    font-size: 36px;
+    position: relative;
+}
+
+.character-info p {
+    font-size: 18px;
+    margin: 5px 0;
+    position: relative;
+}
+
+.character-info p::before {
+    font-size: 16px;
+    margin-right: 10px;
+}
+
+.character-info p:nth-child(2)::before {
+    content: '\26A5';
+}
+
+.character-info p:nth-child(3)::before {
+    content: '\1F9EC';
+    font-family: Arial, sans-serif;
+    filter: grayscale(100%);
+}
+
+.character-info p:nth-child(4)::before {
+    content: '\1F310';
+    font-family: Arial, sans-serif;
+    filter: grayscale(100%);
+}
+
+.character-info p:nth-child(5)::before {
+    content: '\1F4CC';
+    font-family: Arial, sans-serif;
+    filter: grayscale(100%);
+}
+
+.episodes-section {
+    margin-top: 20px;
+}
+
+.episodes-section h2 {
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    text-transform  : uppercase;
+}
+
+.episodes-section h2 span {
+    background-color: #0D8CD2;
+    padding: 6px;
+    border-radius: 8px;
+    margin-left: 10px;
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: 2px;
+}
+
+.episodes-list {
+    list-style: none;
+    padding: 0;
+    font-size: 14px;
+    line-height: 1.5;
+}

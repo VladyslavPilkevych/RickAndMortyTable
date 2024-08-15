@@ -1,12 +1,12 @@
 import React from 'react';
 import './fonts.css';
 import './App.css';
-import Table from './components/Table';
+import AppRoutes from './Routes/Routes';
 
 function App() {
   return (
     <div className="root">
-      <Table />
+      <AppRoutes />
     </div>
   );
 }

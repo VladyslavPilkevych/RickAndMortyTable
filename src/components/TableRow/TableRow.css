@@ -88,7 +88,7 @@ th {
 
 .avatar {
     width: 40px;
-    border-radius: 50%;
+    /* border-radius: 50%; */
     vertical-align: middle;
     margin-right: 10px;
 }

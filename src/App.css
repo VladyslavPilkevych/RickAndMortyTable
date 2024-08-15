@@ -1,4 +1,4 @@
 .root {
-    width: 80%;
-    margin: 10% auto;
-} /* todo */
+    align-items: center;
+    justify-content: center;
+}

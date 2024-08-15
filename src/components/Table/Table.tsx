@@ -1,117 +1,58 @@
 import React from 'react';
 import './Table.css';
-import { IRowData } from '../../types';
+import { ICharacterData } from '../../types';
 import TableRow from '../TableRow';
 
-const mockData: IRowData[] = [
-  {
-    name: 'Rick Sanchez',
-    status: 'Alive',
-    gender: 'Male',
-    species: 'Human',
-    date: '04.11.2017',
-    origin: 'Earth (C-137)',
-  },
-  {
-    name: 'Summer Smith',
-    status: 'Alive',
-    gender: 'Female',
-    species: 'Human',
-    date: '04.11.2017',
-    origin: 'Earth (C-137)',
-  },
-  {
-    name: 'Adjudicator Rick',
-    status: 'Dead',
-    gender: 'Male',
-    species: 'Human',
-    date: '04.11.2017',
-    origin: 'Unknown',
-  },
-  {
-    name: 'Alien Rick',
-    status: 'Unknown',
-    gender: 'Male',
-    species: 'Alien',
-    date: '04.11.2017',
-    origin: 'Unknown',
-  },
-]; // todo: delete (use api https://rickandmortyapi.com/)
+interface ITableData {
+  tableData: ICharacterData[];
+}
 
-const Table = () => {
+const Table = (props: ITableData) => {
+  const { tableData } = props;
   const [activeButton, setActiveButton] = React.useState<string>();
+  // const [sortOrder, setSortOrder] = React.useState<'asc' | 'desc'>('asc');
 
   const handleButtonClick = (buttonName: string) => {
-    setActiveButton((prevActive) => prevActive !== buttonName ? buttonName : "");
+    setActiveButton((prevActive) =>
+      prevActive !== buttonName ? buttonName : ''
+    );
   };
 
   return (
     <table id="table">
-     <thead>
+      <thead>
         <tr className={'table-headers'}>
-          <th>
-            <button
-              className={activeButton === 'Name' ? 'active-filter' : ''}
-              onClick={() => handleButtonClick('Name')}
-            >
-              {"Name"}
-            </button>
-          </th>
-          <th>
-            <button
-              className={activeButton === 'Status' ? 'active-filter' : ''}
-              onClick={() => handleButtonClick('Status')}
-            >
-              {"Status"}
-            </button>
-          </th>
-          <th>
-            <button
-              className={activeButton === 'Gender' ? 'active-filter' : ''}
-              onClick={() => handleButtonClick('Gender')}
-            >
-              {"Gender"}
-            </button>
-          </th>
-          <th>
-            <button
-              className={activeButton === 'Species' ? 'active-filter' : ''}
-              onClick={() => handleButtonClick('Species')}
-            >
-              {"Species"}
-            </button>
-          </th>
-          <th>
-            <button
-              className={activeButton === 'Created' ? 'active-filter' : ''}
-              onClick={() => handleButtonClick('Created')}
-            >
-              {"Created"}
-            </button>
-          </th>
-          <th>
-            <button
-              className={activeButton === 'Origin' ? 'active-filter' : ''}
-              onClick={() => handleButtonClick('Origin')}
-            >
-              {"Origin"}
-            </button>
-          </th>
-          <th>
-            <button
-              className={activeButton === 'Detail' ? 'active-filter' : ''}
-              onClick={() => handleButtonClick('Detail')}
-            >
-              {"Detail"}
-            </button>
-          </th>
+          {[
+            'Name',
+            'Status',
+            'Gender',
+            'Species',
+            'Created',
+            'Origin',
+            'Detail',
+          ]?.map((header) => (
+            <th key={header}>
+              <button
+                className={activeButton === header ? 'active-filter' : ''}
+                onClick={() => handleButtonClick(header)}
+              >
+                {header}
+              </button>
+            </th>
+          ))}
         </tr>
       </thead>
       <tbody>
-        {mockData?.length > 0 ? (
-          mockData?.map((i: IRowData) => <TableRow rowData={i} />)
+        {tableData?.length > 0 ? (
+          tableData?.map((characterData: ICharacterData) => (
+            <TableRow key={characterData.id} characterData={characterData} />
+          ))
         ) : (
-          <h1>{"Any data yet"}</h1>
+          <tr>
+            <td>
+              <h1>{'Any data yet'}</h1>
+            </td>
+          </tr>
         )}
       </tbody>
     </table>

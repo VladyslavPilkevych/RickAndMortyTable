@@ -1,24 +1,23 @@
 import React from 'react';
 import './TableRow.css';
-import { IRowData } from '../../types';
+import { ICharacterData } from '../../types';
+import { Link } from 'react-router-dom';
 
 interface ITableRowProps {
-  rowData: IRowData;
+  characterData: ICharacterData;
 }
 
 const TableRow = (props: ITableRowProps) => {
-  const { name, status, gender, species, date, origin } = props?.rowData;
-  const renderCell = (value: string) => {
-    return value === 'Unknown' ? (
-      <span className="status status-unknown">{'Unknown'}</span>
-    ) : (
+  const { id, name, status, gender, species, created: date, origin, image } = props?.characterData;
+  const renderCell = (value?: string) => {
+    return value !== 'Unknown' && value !== 'unknown' ? (
       value
+    ) : (
+      <span className="status status-unknown">{'Unknown'}</span>
     );
   };
   const renderCellStatus = (value: string) => {
-    return value === 'Unknown' ? (
-      <span className="status status-unknown">{'Unknown'}</span>
-    ) : (
+    return value !== 'Unknown' && value !== 'unknown' ? (
       <span
         className={`status ${
           status === 'Dead' ? 'status-dead' : 'status-alive'
@@ -26,6 +25,8 @@ const TableRow = (props: ITableRowProps) => {
       >
         {value}
       </span>
+    ) : (
+      <span className="status status-unknown">{'Unknown'}</span>
     );
   };
 
@@ -33,9 +34,9 @@ const TableRow = (props: ITableRowProps) => {
     <tr className="table-row">
       <td className="name-cell">
         <img
-          src="https://via.placeholder.com/40"
+          src={image}
           alt={name}
-          className="avatar"
+          className={"avatar"}
         />
         {name}
       </td>
@@ -43,9 +44,11 @@ const TableRow = (props: ITableRowProps) => {
       <td>{renderCell(gender)}</td>
       <td>{renderCell(species)}</td>
       <td>{renderCell(date)}</td>
-      <td>{renderCell(origin)}</td>
+      <td>{renderCell(origin?.name)}</td>
       <td className="detail-link">
-        <a href="#">{"Link"}</a>
+        <Link to={`/character/${id}`}>
+          {"Link"}
+        </Link>
       </td>
     </tr>
   );
