@@ -28,3 +28,10 @@ export interface IEpisodeData {
   url: string;
   created: string;
 }
+
+export enum SortOrderEnum {
+  ASC = 'asc',
+  DESC = 'desc',
+}
+
+export type SortOrderType = SortOrderEnum.ASC | SortOrderEnum.DESC | null;

@@ -1,11 +1,10 @@
-import { ICharacterData } from '../types';
+import { ICharacterData, SortOrderEnum, SortOrderType } from '../types';
 
-export type SortOrder = 'asc' | 'desc' | null;
 
 export const sortData = (
   data: ICharacterData[],
   sortKey: string,
-  sortOrder: SortOrder
+  sortOrder: SortOrderType
 ): ICharacterData[] => {
   if (!sortOrder || !sortKey) return data;
 
@@ -48,8 +47,8 @@ export const sortData = (
     if (isValueAUnknown && !isValueBUnknown) return 1;
     if (!isValueAUnknown && isValueBUnknown) return -1;
 
-    if (valueA < valueB) return sortOrder === 'asc' ? -1 : 1;
-    if (valueA > valueB) return sortOrder === 'asc' ? 1 : -1;
+    if (valueA < valueB) return sortOrder === SortOrderEnum.ASC ? 1 : -1;
+    if (valueA > valueB) return sortOrder === SortOrderEnum.ASC ? -1 : 1;
     return 0;
   });
 };

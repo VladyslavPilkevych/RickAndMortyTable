@@ -54,12 +54,12 @@ th {
     content: '\25BC';
 }
 
-.table__headers th button.asc::after {
+.table__headers th:not(:last-child) button.asc::after {
     content: "\25B2";
     color: #FFFFFF;
 }
 
-.table__headers th button.desc::after {
+.table__headers th:not(:last-child) button.desc::after {
     content: "\25BC";
     color: #FFFFFF;
 }

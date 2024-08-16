@@ -1,8 +1,8 @@
 import React from 'react';
 import './Table.css';
-import { ICharacterData } from '../../types';
+import { ICharacterData, SortOrderType, SortOrderEnum } from '../../types';
 import TableRow from '../TableRow';
-import { sortData, SortOrder } from '../../utils/sortUtils';
+import { sortData } from '../../utils/sortUtils';
 
 interface ITableData {
   tableData: ICharacterData[];
@@ -11,16 +11,16 @@ interface ITableData {
 const Table = (props: ITableData) => {
   const { tableData } = props;
   const [activeButton, setActiveButton] = React.useState<string>();
-  const [sortOrder, setSortOrder] = React.useState<SortOrder>(null);
+  const [sortOrder, setSortOrder] = React.useState<SortOrderType>(null);
 
   const handleButtonClick = (buttonName: string) => {
     if (activeButton === buttonName && sortOrder !== null) {
       setSortOrder((prevSortOrder) =>
-        prevSortOrder === 'desc' ? 'asc' : null
+        prevSortOrder === SortOrderEnum.DESC ? SortOrderEnum.ASC : null
       );
     } else {
       setActiveButton(buttonName);
-      setSortOrder('desc');
+      setSortOrder(SortOrderEnum.DESC);
     }
   };
 
@@ -29,8 +29,8 @@ const Table = (props: ITableData) => {
   }, [tableData, activeButton, sortOrder]);
 
   return (
-    <div className={"table__container"}>
-      <table id={"table"} className={'montserrat'}>
+    <div className={'table__container'}>
+      <table id={'table'} className={'montserrat'}>
         <thead>
           <tr className={'table__headers'}>
             {[
@@ -46,10 +46,10 @@ const Table = (props: ITableData) => {
                 <button
                   className={`table-headers__button ${
                     activeButton === header
-                      ? sortOrder === 'asc'
-                        ? 'asc'
-                        : sortOrder === 'desc'
-                        ? 'desc'
+                      ? sortOrder === SortOrderEnum.ASC
+                        ? SortOrderEnum.ASC
+                        : sortOrder === SortOrderEnum.DESC
+                        ? SortOrderEnum.DESC
                         : ''
                       : ''
                   }`}
