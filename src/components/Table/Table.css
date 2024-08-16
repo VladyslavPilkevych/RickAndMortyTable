@@ -39,12 +39,22 @@ th {
     right: 8px;
     top: 50%;
     transform: translateY(-50%);
-    color: #BCBDBD;
+    color: #424345;
     font-size: 16px;
     line-height: 0;
     content: "\25BC";
 }
 
-.active-filter::after {
-    content: "\25B2" !important;
+.table-headers th button.asc::after {
+    content: "\25B2";
+    color: #FFFFFF;
+}
+
+.table-headers th button.desc::after {
+    content: "\25BC";
+    color: #FFFFFF;
+}
+
+.active-filter {
+    color: #FFFFFF;
 }

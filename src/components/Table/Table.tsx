@@ -2,6 +2,7 @@ import React from 'react';
 import './Table.css';
 import { ICharacterData } from '../../types';
 import TableRow from '../TableRow';
+import { sortData, SortOrder } from '../../utils/sortUtils';
 
 interface ITableData {
   tableData: ICharacterData[];
@@ -10,13 +11,20 @@ interface ITableData {
 const Table = (props: ITableData) => {
   const { tableData } = props;
   const [activeButton, setActiveButton] = React.useState<string>();
-  // const [sortOrder, setSortOrder] = React.useState<'asc' | 'desc'>('asc');
+  const [sortOrder, setSortOrder] = React.useState<SortOrder>(null);
 
   const handleButtonClick = (buttonName: string) => {
-    setActiveButton((prevActive) =>
-      prevActive !== buttonName ? buttonName : ''
-    );
+    if (activeButton === buttonName && sortOrder !== null) {
+      setSortOrder((prevSortOrder) => (prevSortOrder === 'desc' ? 'asc' : null));
+    } else {
+      setActiveButton(buttonName);
+      setSortOrder('desc');
+    }
   };
+
+  const sortedData = React.useMemo(() => {
+    return sortData(tableData, activeButton || '', sortOrder);
+  }, [tableData, activeButton, sortOrder]);
 
   return (
     <table id="table">
@@ -33,7 +41,7 @@ const Table = (props: ITableData) => {
           ]?.map((header) => (
             <th key={header}>
               <button
-                className={activeButton === header ? 'active-filter' : ''}
+                className={`${activeButton === header ? (sortOrder === 'asc' ? 'asc' : sortOrder === 'desc' ? 'desc' : '') : ''}`}
                 onClick={() => handleButtonClick(header)}
               >
                 {header}
@@ -43,14 +51,14 @@ const Table = (props: ITableData) => {
         </tr>
       </thead>
       <tbody>
-        {tableData?.length > 0 ? (
-          tableData?.map((characterData: ICharacterData) => (
+        {sortedData?.length > 0 ? (
+          sortedData?.map((characterData: ICharacterData) => (
             <TableRow key={characterData.id} characterData={characterData} />
           ))
         ) : (
           <tr>
-            <td>
-              <h1>{'Any data yet'}</h1>
+            <td colSpan={7}>
+              <h1>{'No data available'}</h1>
             </td>
           </tr>
         )}

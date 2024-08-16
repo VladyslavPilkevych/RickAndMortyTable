@@ -2,7 +2,7 @@ import React from 'react';
 import Table from '../../components/Table';
 import './TablePage.css';
 import { useQuery, keepPreviousData } from '@tanstack/react-query';
-import { fetchCharactersByIds } from '../../utils/fetchCharactersByIds';
+import { fetchCharactersByIds } from '../../api/fetchCharactersByIds';
 import { ICharacterData } from '../../types';
 
 const TablePage: React.FC = () => {
