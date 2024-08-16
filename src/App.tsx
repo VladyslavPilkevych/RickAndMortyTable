@@ -1,5 +1,6 @@
 import React from 'react';
-import './fonts.css';
+import './assets/styles/reset.css';
+import './assets/fonts/fonts.css';
 import './App.css';
 import AppRoutes from './Routes/Routes';
 

@@ -1,4 +1,4 @@
-.tablePageRoot {
+.table-page-root {
     width: 80%;
     margin: 10% auto;
     align-items: center;
@@ -7,7 +7,7 @@
     flex-direction: column;
 }
 
-.loadMoreBtn {
+.load-more-btn {
     font-family: 'Oswald';
     font-weight: 400;
     font-size: 14px;
@@ -24,12 +24,12 @@
     transition: transform 0.3s ease, background-color 0.3s ease;
 }
 
-.loadMoreBtnNotLoading:hover {
+.load-more-btn-not-loading:hover {
     background-color: #000000;
     transform: scale(1.01);
 }
 
-.loadMoreBtnNotLoading::before {
+.load-more-btn-not-loading::before {
     position: absolute;
     left: 8px;
     top: 50%;
@@ -40,7 +40,7 @@
     content: "\2193";
 }
 
-.loadMoreBtnLoading {
+.load-more-btn-loading {
   padding: 12px 30px;
   font-size: 14px;
   font-weight: bold;
@@ -48,7 +48,7 @@
   letter-spacing: 2px;
 }
 
-.loadMoreBtnLoading::after {
+.load-more-btn-loading::after {
   content: '...';
   animation: blink 1.5s infinite steps(3);
 }

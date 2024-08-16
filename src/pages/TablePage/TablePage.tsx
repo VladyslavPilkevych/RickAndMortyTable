@@ -50,7 +50,7 @@ const TablePage: React.FC = () => {
   }, [loadMoreCharacters, isLoading, isError]);
 
   return (
-    <div className={'tablePageRoot'}>
+    <div className={'table-page-root'}>
       <Table tableData={charactersData} />
       {isError && (
         <div className={'container'}>
@@ -61,8 +61,8 @@ const TablePage: React.FC = () => {
         </div>
       )}
       <button
-        className={`loadMoreBtn ${
-          isLoading ? 'loadMoreBtnLoading' : 'loadMoreBtnNotLoading'
+        className={`load-more-btn ${
+          isLoading ? 'load-more-btn-loading' : 'load-more-btn-not-loading'
         }`}
         onClick={loadMoreCharacters}
         disabled={isLoading || isError}
