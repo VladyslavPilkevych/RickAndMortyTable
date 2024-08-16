@@ -6,7 +6,7 @@ import AppRoutes from './Routes/Routes';
 
 function App() {
   return (
-    <div className="root">
+    <div className={'root'}>
       <AppRoutes />
     </div>
   );

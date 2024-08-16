@@ -8,36 +8,47 @@ interface ITableRowProps {
 }
 
 const TableRow = (props: ITableRowProps) => {
-  const { id, name, status, gender, species, created: date, origin, image } = props?.characterData;
+  const {
+    id,
+    name,
+    status,
+    gender,
+    species,
+    created: date,
+    origin,
+    image,
+  } = props?.characterData;
   const renderCell = (value?: string) => {
     return value !== 'Unknown' && value !== 'unknown' ? (
       value
     ) : (
-      <span className="status status-unknown">{'Unknown'}</span>
+      <span className={'status__indicator status__indicator--unknown'}>
+        {'Unknown'}
+      </span>
     );
   };
   const renderCellStatus = (value: string) => {
     return value !== 'Unknown' && value !== 'unknown' ? (
       <span
-        className={`status ${
-          status === 'Dead' ? 'status-dead' : 'status-alive'
+        className={`status__indicator ${
+          status === 'Dead'
+            ? 'status__indicator--dead'
+            : 'status__indicator--alive'
         }`}
       >
         {value}
       </span>
     ) : (
-      <span className="status status-unknown">{'Unknown'}</span>
+      <span className={'status__indicator status__indicator--unknown'}>
+        {'Unknown'}
+      </span>
     );
   };
 
   return (
-    <tr className="table-row">
-      <td className="name-cell">
-        <img
-          src={image}
-          alt={name}
-          className={"avatar"}
-        />
+    <tr className={'table__row'}>
+      <td className={'table__name-cell'}>
+        <img src={image} alt={name} className={'avatar__image'} />
         {name}
       </td>
       <td>{renderCellStatus(status)}</td>
@@ -45,10 +56,8 @@ const TableRow = (props: ITableRowProps) => {
       <td>{renderCell(species)}</td>
       <td>{renderCell(date)}</td>
       <td>{renderCell(origin?.name)}</td>
-      <td className="detail-link">
-        <Link to={`/character/${id}`}>
-          {"Link"}
-        </Link>
+      <td className={'link--detail'}>
+        <Link to={`/character/${id}`}>{'Link'}</Link>
       </td>
     </tr>
   );

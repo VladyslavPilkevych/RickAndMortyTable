@@ -16,30 +16,30 @@ const CharacterDetailsPage: React.FC = () => {
   return (
     <>
       {isError && (
-        <div className={'container'}>
-          <div className={'error-message'}>
-            <span className={'error-icon'}></span>
+        <div className={'section__container'}>
+          <div className={'message--error'}>
+            <span className={'icon--error'}></span>
             {'Something went wrong. Please try again later.'}
           </div>
         </div>
       )}
-      <div className="character-details">
-        <button className="back-button" onClick={() => navigate(-1)}>
+      <div className={'character__details montserrat'}>
+        <button className={'button--back'} onClick={() => navigate(-1)}>
           {'Back'}
         </button>
-        <div className="character-block">
-          <div className="character-header">
+        <div className={'character-block'}>
+          <div className={'character__header'}>
             <img
               src={data?.character?.image}
               alt={data?.character?.name}
-              className="character-image"
+              className={'character__image'}
             />
-            <div className="character-info">
-              <div className="character-name-block">
+            <div className={'character__info'}>
+              <div className={'character__name-block'}>
                 <h1>{data?.character?.name}</h1>
                 <div>
                   <span
-                    className={`status status-${data?.character?.status?.toLowerCase()}`}
+                    className={`status__indicator status__indicator--${data?.character?.status?.toLowerCase()}`}
                   >
                     {data?.character?.status}
                   </span>
@@ -51,12 +51,12 @@ const CharacterDetailsPage: React.FC = () => {
               <p>{data?.character?.location?.name}</p>
             </div>
           </div>
-          <div className="episodes-section">
+          <div className={'episodes__section'}>
             <h2>
               {'Episodes'}
               <span>{data?.episodes?.length}</span>
             </h2>
-            <p className="episodes-list">
+            <p className={'episodes__list'}>
               {!!data?.episodes ? (
                 data?.episodes?.map((episode, index) => (
                   <>

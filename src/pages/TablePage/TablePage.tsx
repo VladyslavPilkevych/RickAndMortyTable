@@ -7,7 +7,9 @@ import { ICharacterData } from '../../types';
 
 const TablePage: React.FC = () => {
   const [ids, setIds] = React.useState<number[]>([1, 2, 3, 4, 5]);
-  const [charactersData, setCharactersData] = React.useState<ICharacterData[]>([]);
+  const [charactersData, setCharactersData] = React.useState<ICharacterData[]>(
+    []
+  );
   const loadMoreRef = React.useRef<HTMLDivElement | null>(null);
 
   const { data, isLoading, isError } = useQuery({
@@ -20,7 +22,7 @@ const TablePage: React.FC = () => {
     if (data) {
       setCharactersData((prevData) => [...prevData, ...data]);
     }
-  }, [data])
+  }, [data]);
 
   const loadMoreCharacters = React.useCallback(() => {
     const nextIdStart = ids[ids.length - 1] + 1;
@@ -50,26 +52,28 @@ const TablePage: React.FC = () => {
   }, [loadMoreCharacters, isLoading, isError]);
 
   return (
-    <div className={'table-page-root'}>
+    <div className={'page__table-container'}>
       <Table tableData={charactersData} />
       {isError && (
         <div className={'container'}>
-          <div className={'error-message'}>
-            <span className={'error-icon'}></span>
+          <div className={'message--error'}>
+            <span className={'icon--error'}></span>
             {'Something went wrong. Please try again later.'}
           </div>
         </div>
       )}
       <button
-        className={`load-more-btn ${
-          isLoading ? 'load-more-btn-loading' : 'load-more-btn-not-loading'
+        className={`button--load-more ${
+          isLoading
+            ? 'button--load-more_loading'
+            : 'button--load-more_not-loading'
         }`}
         onClick={loadMoreCharacters}
         disabled={isLoading || isError}
       >
         {isLoading ? 'Loading' : 'Load More'}
       </button>
-      <div ref={loadMoreRef} className="load-more-trigger"></div>
+      <div ref={loadMoreRef} className={'trigger--load-more'}></div>
     </div>
   );
 };

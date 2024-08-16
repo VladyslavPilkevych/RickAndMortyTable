@@ -10,28 +10,28 @@ th {
     border-bottom: 1px solid #424345;
 }
 
-.table-row {
+.table__row {
     border-bottom: 1px solid #424345;
     border-radius: 7px;
     transition: transform 0.3s ease, background-color 0.3s ease;
 }
 
-.table-row:hover {
+.table__row:hover {
     background-color: #000000;
     transform: scale(1.01);
 }
 
-.table-row td {
+.table__row td {
     vertical-align: middle;
     font-size: 14px;
     line-height: 19px;
 }
 
-.table-row td a {
+.table__row td a {
     text-decoration: underline;
 }
 
-.status {
+.status__indicator {
     position: relative;
     display: inline-block;
     background: none;
@@ -43,7 +43,7 @@ th {
     line-height: 20px;
 }
 
-.status::before {
+.status__indicator::before {
     position: absolute;
     left: 8px;
     top: 50%;
@@ -53,47 +53,46 @@ th {
     line-height: 0;
 }
 
-.status-alive {
+.status__indicator--alive {
     background-color: #67EF7B;
 }
 
-.status-alive::before {
+.status__indicator--alive::before {
     content: "\2713";
 }
 
-.status-dead {
+.status__indicator--dead {
     background-color: #FB6F6D;
 }
 
-.status-dead::before {
+.status__indicator--dead::before {
     content: "\2717";
 }
 
-.status-unknown {
+.status__indicator--unknown {
     background-color: #424345;
 }
 
-.status-unknown::before {
+.status__indicator--unknown::before {
     content: "\003F";
 }
 
-.detail-link a {
+.link--detail a {
     color: #59ABE6;
     text-decoration: none;
 }
 
-.detail-link a:hover {
+.link--detail a:hover {
     text-decoration: underline;
 }
 
-.avatar {
+.avatar__image {
     width: 40px;
-    /* border-radius: 50%; */
     vertical-align: middle;
     margin-right: 10px;
 }
 
-.name-cell {
+.table__name-cell {
     display: flex;
     align-items: center;
 }

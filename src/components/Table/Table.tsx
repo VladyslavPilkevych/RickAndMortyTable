@@ -15,7 +15,9 @@ const Table = (props: ITableData) => {
 
   const handleButtonClick = (buttonName: string) => {
     if (activeButton === buttonName && sortOrder !== null) {
-      setSortOrder((prevSortOrder) => (prevSortOrder === 'desc' ? 'asc' : null));
+      setSortOrder((prevSortOrder) =>
+        prevSortOrder === 'desc' ? 'asc' : null
+      );
     } else {
       setActiveButton(buttonName);
       setSortOrder('desc');
@@ -27,43 +29,53 @@ const Table = (props: ITableData) => {
   }, [tableData, activeButton, sortOrder]);
 
   return (
-    <table id="table">
-      <thead>
-        <tr className={'table-headers'}>
-          {[
-            'Name',
-            'Status',
-            'Gender',
-            'Species',
-            'Created',
-            'Origin',
-            'Detail',
-          ]?.map((header) => (
-            <th key={header}>
-              <button
-                className={`${activeButton === header ? (sortOrder === 'asc' ? 'asc' : sortOrder === 'desc' ? 'desc' : '') : ''}`}
-                onClick={() => handleButtonClick(header)}
-              >
-                {header}
-              </button>
-            </th>
-          ))}
-        </tr>
-      </thead>
-      <tbody>
-        {sortedData?.length > 0 ? (
-          sortedData?.map((characterData: ICharacterData) => (
-            <TableRow key={characterData.id} characterData={characterData} />
-          ))
-        ) : (
-          <tr>
-            <td colSpan={7}>
-              <h1>{'No data available'}</h1>
-            </td>
+    <div className={"table__container"}>
+      <table id={"table"} className={'montserrat'}>
+        <thead>
+          <tr className={'table__headers'}>
+            {[
+              'Name',
+              'Status',
+              'Gender',
+              'Species',
+              'Created',
+              'Origin',
+              'Detail',
+            ]?.map((header) => (
+              <th key={header}>
+                <button
+                  className={`table-headers__button ${
+                    activeButton === header
+                      ? sortOrder === 'asc'
+                        ? 'asc'
+                        : sortOrder === 'desc'
+                        ? 'desc'
+                        : ''
+                      : ''
+                  }`}
+                  onClick={() => handleButtonClick(header)}
+                >
+                  {header}
+                </button>
+              </th>
+            ))}
           </tr>
-        )}
-      </tbody>
-    </table>
+        </thead>
+        <tbody>
+          {sortedData?.length > 0 ? (
+            sortedData?.map((characterData: ICharacterData) => (
+              <TableRow key={characterData.id} characterData={characterData} />
+            ))
+          ) : (
+            <tr>
+              <td colSpan={7}>
+                <h1>{'No data available'}</h1>
+              </td>
+            </tr>
+          )}
+        </tbody>
+      </table>
+    </div>
   );
 };
 
