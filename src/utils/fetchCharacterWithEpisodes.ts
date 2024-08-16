@@ -1,6 +1,6 @@
 import { ICharacterData } from '../types';
-import { fetchCharacterById } from './fetchCharacterById';
-import { fetchMultiplyEpisodesByIds } from './fetchMultiplyEpisodesByIds';
+import { fetchCharacterById } from '../api/fetchCharacterById';
+import { fetchMultiplyEpisodesByIds } from '../api/fetchMultiplyEpisodesByIds';
 
 interface IEpisodesResponse {
   id: number;
