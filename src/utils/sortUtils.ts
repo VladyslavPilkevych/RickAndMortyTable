@@ -1,54 +1,43 @@
-import { ICharacterData, SortOrderEnum, SortOrderType } from '../types';
+import { SortOrderEnum, SortOrderType } from '../types';
 
+const compareValues = <T>(a: T, b: T, sortOrder: SortOrderType): number => {
+  const isValueAUnknown = a === 'unknown' || a === 'Unknown';
+  const isValueBUnknown = b === 'unknown' || b === 'Unknown';
 
-export const sortData = (
-  data: ICharacterData[],
-  sortKey: string,
+  if (isValueAUnknown && !isValueBUnknown) return 1;
+  if (!isValueAUnknown && isValueBUnknown) return -1;
+  if (isValueAUnknown && isValueBUnknown) return 0;
+
+  if (a === b) return 0;
+
+  const comparison = a < b ? 1 : -1;
+  return sortOrder === SortOrderEnum.ASC ? comparison : -comparison;
+};
+
+export const sortByField = <T>(
+  data: T[],
+  sortKey: keyof T,
   sortOrder: SortOrderType
-): ICharacterData[] => {
-  if (!sortOrder || !sortKey) return data;
-
+): T[] => {
+  if (!sortKey || !sortOrder) return data;
+  console.log(data, sortKey, sortOrder);
   return [...data].sort((a, b) => {
-    let valueA: any;
-    let valueB: any;
+    const valueA = a[sortKey];
+    const valueB = b[sortKey];
 
-    switch (sortKey) {
-      case 'Name':
-        valueA = a.name.toLowerCase();
-        valueB = b.name.toLowerCase();
-        break;
-      case 'Status':
-        valueA = a.status;
-        valueB = b.status;
-        break;
-      case 'Gender':
-        valueA = a.gender;
-        valueB = b.gender;
-        break;
-      case 'Species':
-        valueA = a.species;
-        valueB = b.species;
-        break;
-      case 'Created':
-        valueA = new Date(a.created).getTime();
-        valueB = new Date(b.created).getTime();
-        break;
-      case 'Origin':
-        valueA = a.origin.name.toLowerCase();
-        valueB = b.origin.name.toLowerCase();
-        break;
-      default:
-        return 0;
+    if (typeof valueA === 'string' && typeof valueB === 'string') {
+      return compareValues(
+        valueA.toLowerCase(),
+        valueB.toLowerCase(),
+        sortOrder
+      );
     }
-
-    const isValueAUnknown = valueA === 'unknown' || valueA === 'Unknown';
-    const isValueBUnknown = valueB === 'unknown' || valueB === 'Unknown';
-
-    if (isValueAUnknown && !isValueBUnknown) return 1;
-    if (!isValueAUnknown && isValueBUnknown) return -1;
-
-    if (valueA < valueB) return sortOrder === SortOrderEnum.ASC ? 1 : -1;
-    if (valueA > valueB) return sortOrder === SortOrderEnum.ASC ? -1 : 1;
-    return 0;
+    if (valueA instanceof Date && valueB instanceof Date) {
+      return compareValues(valueA.getTime(), valueB.getTime(), sortOrder);
+    }
+    if (typeof valueA === 'number' && typeof valueB === 'number') {
+      return compareValues(valueA, valueB, sortOrder);
+    }
+    throw new Error(`Unsupported data type for sorting: ${typeof valueA}`);
   });
 };

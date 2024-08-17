@@ -1,10 +1,11 @@
 import React from 'react';
 import './TableRow.css';
-import { ICharacterData } from '../../types';
+import { ICharacterDataParsed } from '../../types';
 import { Link } from 'react-router-dom';
+import { formatDate } from '../../utils/formatDate';
 
 interface ITableRowProps {
-  characterData: ICharacterData;
+  characterData: ICharacterDataParsed;
 }
 
 const TableRow = (props: ITableRowProps) => {
@@ -54,8 +55,8 @@ const TableRow = (props: ITableRowProps) => {
       <td>{renderCellStatus(status)}</td>
       <td>{renderCell(gender)}</td>
       <td>{renderCell(species)}</td>
-      <td>{renderCell(date)}</td>
-      <td>{renderCell(origin?.name)}</td>
+      <td>{renderCell(formatDate(date))}</td>
+      <td>{renderCell(origin)}</td>
       <td className={'link--detail'}>
         <Link to={`/character/${id}`}>{'Link'}</Link>
       </td>

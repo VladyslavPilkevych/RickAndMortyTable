@@ -3,11 +3,13 @@ import Table from '../../components/Table';
 import './TablePage.css';
 import { useQuery, keepPreviousData } from '@tanstack/react-query';
 import { fetchCharactersByIds } from '../../api/fetchCharactersByIds';
-import { ICharacterData } from '../../types';
+import { ICharacterDataParsed } from '../../types';
+import TableRow from '../../components/TableRow';
+import { parseValuesFromBE } from '../../utils/parseValuesFromBE';
 
 const TablePage: React.FC = () => {
   const [ids, setIds] = React.useState<number[]>([1, 2, 3, 4, 5]);
-  const [charactersData, setCharactersData] = React.useState<ICharacterData[]>(
+  const [charactersData, setCharactersData] = React.useState<ICharacterDataParsed[]>(
     []
   );
   const loadMoreRef = React.useRef<HTMLDivElement | null>(null);
@@ -19,8 +21,24 @@ const TablePage: React.FC = () => {
   });
 
   React.useEffect(() => {
+    const storedData = sessionStorage.getItem('tableItems');
+    if (storedData) {
+      const parsedDataFromBE: ICharacterDataParsed[] = JSON.parse(storedData);
+      setCharactersData(parsedDataFromBE);
+      const nextIds = Array.from({ length: 5 }, (_, i) => parsedDataFromBE?.length);
+      setIds((prevIds) => [...prevIds, ...nextIds]);
+    }
+  }, []);
+
+  React.useEffect(() => {
     if (data) {
-      setCharactersData((prevData) => [...prevData, ...data]);
+      const parsedData = parseValuesFromBE(data);
+      setCharactersData((prevData) => {
+        const existingIds = new Set(prevData.map((item) => item.id));
+        const newData = parsedData.filter((item) => !existingIds.has(item.id));
+        sessionStorage.setItem('tableItems', JSON.stringify([...prevData, ...newData]));
+        return [...prevData, ...newData];
+      });
     }
   }, [data]);
 
@@ -53,7 +71,21 @@ const TablePage: React.FC = () => {
 
   return (
     <div className={'page__table-container'}>
-      <Table tableData={charactersData} />
+      <Table<ICharacterDataParsed>
+        tableData={charactersData ?? []}
+        columns={[
+          { header: 'Name', accessor: 'name', isSortable: true },
+          { header: 'Status', accessor: 'status', isSortable: true },
+          { header: 'Gender', accessor: 'gender', isSortable: true },
+          { header: 'Species', accessor: 'species', isSortable: true },
+          { header: 'Created', accessor: 'created', isSortable: true },
+          { header: 'Origin', accessor: 'origin', isSortable: true },
+          { header: 'Detail', accessor: 'id', isSortable: false },
+        ]}
+        renderRow={(item: ICharacterDataParsed) => (
+          <TableRow key={item.id} characterData={item} />
+        )}
+      />
       {isError && (
         <div className={'container'}>
           <div className={'message--error'}>

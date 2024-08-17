@@ -1,31 +1,46 @@
 import React from 'react';
 import './Table.css';
-import { ICharacterData, SortOrderType, SortOrderEnum } from '../../types';
-import TableRow from '../TableRow';
-import { sortData } from '../../utils/sortUtils';
+import { SortOrderType, SortOrderEnum } from '../../types';
+import { sortByField } from '../../utils/sortUtils';
 
-interface ITableData {
-  tableData: ICharacterData[];
+interface IColumnProps<T> {
+  header: string;
+  accessor: keyof T;
+  isSortable: boolean;
+  // renderCell?: (item: T) => React.ReactNode;
 }
 
-const Table = (props: ITableData) => {
-  const { tableData } = props;
+interface ITableProps<T> {
+  tableData: T[];
+  columns: IColumnProps<T>[];
+  renderRow: (item: T) => React.ReactNode;
+  noDataText?: string;
+}
+
+function Table<T>(props: ITableProps<T>): JSX.Element {
+  const {
+    tableData,
+    columns,
+    renderRow,
+    noDataText = 'No data available',
+  } = props;
   const [activeButton, setActiveButton] = React.useState<string>();
   const [sortOrder, setSortOrder] = React.useState<SortOrderType>(null);
 
-  const handleButtonClick = (buttonName: string) => {
-    if (activeButton === buttonName && sortOrder !== null) {
+  const handleHeaderClick = (column: string) => {
+    if (activeButton === column && sortOrder !== null) {
       setSortOrder((prevSortOrder) =>
         prevSortOrder === SortOrderEnum.DESC ? SortOrderEnum.ASC : null
       );
     } else {
-      setActiveButton(buttonName);
+      setActiveButton(column);
       setSortOrder(SortOrderEnum.DESC);
     }
   };
 
   const sortedData = React.useMemo(() => {
-    return sortData(tableData, activeButton || '', sortOrder);
+    const sortKey = activeButton?.toLowerCase() as keyof T;
+    return sortByField(tableData, sortKey, sortOrder);
   }, [tableData, activeButton, sortOrder]);
 
   return (
@@ -33,43 +48,37 @@ const Table = (props: ITableData) => {
       <table id={'table'} className={'montserrat'}>
         <thead>
           <tr className={'table__headers'}>
-            {[
-              'Name',
-              'Status',
-              'Gender',
-              'Species',
-              'Created',
-              'Origin',
-              'Detail',
-            ]?.map((header) => (
-              <th key={header}>
-                <button
-                  className={`table-headers__button ${
-                    activeButton === header
-                      ? sortOrder === SortOrderEnum.ASC
-                        ? SortOrderEnum.ASC
-                        : sortOrder === SortOrderEnum.DESC
-                        ? SortOrderEnum.DESC
+            {columns?.map((column) => (
+              <th key={column.header}>
+                {column.isSortable ? (
+                  <button
+                    className={`table-headers__button ${
+                      activeButton === column.header
+                        ? sortOrder === SortOrderEnum.ASC
+                          ? SortOrderEnum.ASC
+                          : sortOrder === SortOrderEnum.DESC
+                          ? SortOrderEnum.DESC
+                          : ''
                         : ''
-                      : ''
-                  }`}
-                  onClick={() => handleButtonClick(header)}
-                >
-                  {header}
-                </button>
+                    }`}
+                    onClick={() => handleHeaderClick(column.header)}
+                  >
+                    {column.header}
+                  </button>
+                ) : (
+                  <p className={'table-headers__button'}>{column.header}</p>
+                )}
               </th>
             ))}
           </tr>
         </thead>
         <tbody>
           {sortedData?.length > 0 ? (
-            sortedData?.map((characterData: ICharacterData) => (
-              <TableRow key={characterData.id} characterData={characterData} />
-            ))
+            sortedData?.map((item: T) => renderRow(item))
           ) : (
             <tr>
               <td colSpan={7}>
-                <h1>{'No data available'}</h1>
+                <h1>{noDataText}</h1>
               </td>
             </tr>
           )}
@@ -77,6 +86,6 @@ const Table = (props: ITableData) => {
       </table>
     </div>
   );
-};
+}
 
-export default React.memo(Table);
+export default Table;

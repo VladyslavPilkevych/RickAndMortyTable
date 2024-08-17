@@ -6,17 +6,28 @@ export interface ICharacterData {
   type: string;
   gender: string;
   origin: {
-      name: string;
-      url: string;
-  },
+    name: string;
+    url: string;
+  };
   location: {
-      name: string;
-      url: string;
-  },
+    name: string;
+    url: string;
+  };
   image: string;
   episode: string[];
   url: string;
   created: string;
+}
+
+export interface ICharacterDataParsed {
+  id: number;
+  image: string;
+  name: string;
+  status: string;
+  gender: string;
+  species: string;
+  created: string;
+  origin: string;
 }
 
 export interface IEpisodeData {
