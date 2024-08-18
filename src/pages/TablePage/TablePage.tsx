@@ -1,81 +1,50 @@
 import React from 'react';
 import Table from '../../components/Table';
 import './TablePage.css';
-import { useQuery, keepPreviousData } from '@tanstack/react-query';
-import { fetchCharactersByIds } from '../../api/fetchCharactersByIds';
+import { useCharactersData } from '../../hooks/useCharactersData';
 import { ICharacterDataParsed } from '../../types';
 import TableRow from '../../components/TableRow';
-import { parseValuesFromBE } from '../../utils/parseValuesFromBE';
 import ErrorMessage from '../../components/ErrorMessage';
 import Loader from '../../components/Loader';
+import { useLoadMore } from '../../hooks/useLoadMore';
+import { useIntersectionObserver } from '../../hooks/useIntersectionObserver';
+import { parseValuesFromBE } from '../../utils/parseValuesFromBE';
+import { useDebounce } from '../../hooks/useDebounce';
 
 const TablePage: React.FC = () => {
   const [ids, setIds] = React.useState<number[]>([1, 2, 3, 4, 5]);
   const [charactersData, setCharactersData] = React.useState<
     ICharacterDataParsed[]
   >([]);
+  const [hasMore, setHasMore] = React.useState(true);
   const loadMoreRef = React.useRef<HTMLDivElement | null>(null);
 
-  const { data, isLoading, isError } = useQuery({
-    queryKey: ['characters', ids],
-    queryFn: () => fetchCharactersByIds(ids.slice(-5)),
-    placeholderData: keepPreviousData,
-  });
-
-  React.useEffect(() => {
-    const storedData = sessionStorage.getItem('tableItems');
-    if (storedData) {
-      const parsedDataFromBE: ICharacterDataParsed[] = JSON.parse(storedData);
-      setCharactersData(parsedDataFromBE);
-      const nextIds = Array.from(
-        { length: 5 },
-        (_, i) => parsedDataFromBE?.length
-      );
-      setIds((prevIds) => [...prevIds, ...nextIds]);
-    }
-  }, []);
+  const { data, isLoading, isError } = useCharactersData(ids);
 
   React.useEffect(() => {
     if (data) {
-      const parsedData = parseValuesFromBE(data);
-      setCharactersData((prevData) => {
-        const existingIds = new Set(prevData.map((item) => item.id));
-        const newData = parsedData.filter((item) => !existingIds.has(item.id));
-        sessionStorage.setItem(
-          'tableItems',
-          JSON.stringify([...prevData, ...newData])
-        );
-        return [...prevData, ...newData];
-      });
+      if (data.length === 0) {
+        setHasMore(false);
+      } else {
+        setHasMore(true);
+        const parsedData = parseValuesFromBE(data);
+        console.log(charactersData, data, hasMore);
+        setCharactersData((prevData) => {
+          const existingIds = new Set(prevData.map((item) => item.id));
+          const newData = parsedData.filter((item) => !existingIds.has(item.id));
+          const updatedData = [...prevData, ...newData];
+          sessionStorage.setItem('tableItems', JSON.stringify(updatedData));
+          return updatedData;
+        });
+      }
     }
   }, [data]);
 
-  const loadMoreCharacters = React.useCallback(() => {
-    const nextIdStart = ids[ids.length - 1] + 1;
-    const nextIds = Array.from({ length: 5 }, (_, i) => nextIdStart + i);
-    setIds((prevIds) => [...prevIds, ...nextIds]);
-  }, [ids]);
-
-  React.useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        if (entries[0].isIntersecting && !isLoading && !isError) {
-          loadMoreCharacters();
-        }
-      },
-      { threshold: 1.0 }
-    );
-
-    if (loadMoreRef?.current) {
-      observer.observe(loadMoreRef.current);
-    }
-
-    return () => {
-      if (loadMoreRef?.current) {
-        observer.unobserve(loadMoreRef.current);
-      }
-    };
-  }, [loadMoreCharacters, isLoading, isError]);
+  const loadMoreCharacters = useDebounce(
+    useLoadMore(ids, setIds, setHasMore, hasMore),
+    100
+  );
+  useIntersectionObserver(loadMoreRef, loadMoreCharacters, isLoading, isError);
 
   const handleRefresh = () => {
     window.location.reload();
@@ -84,7 +53,7 @@ const TablePage: React.FC = () => {
   return (
     <div className={'page__table-container'}>
       <Table<ICharacterDataParsed>
-        tableData={charactersData ?? []}
+        tableData={charactersData}
         columns={[
           { header: 'Name', accessor: 'name', isSortable: true },
           { header: 'Status', accessor: 'status', isSortable: true },
@@ -106,20 +75,24 @@ const TablePage: React.FC = () => {
             <Loader />
           ) : (
             <>
-              <button
-                className={'button--load-more'}
-                onClick={loadMoreCharacters}
-              >
+              {hasMore && (
                 <>
-                  <img
-                    src={'/icons/arrowDown.png'}
-                    alt={'Load More'}
-                    className={'button--load-more_icon'}
-                  />
-                  {'Load More'}
+                  <button
+                    className={'button--load-more'}
+                    onClick={loadMoreCharacters}
+                  >
+                    <>
+                      <img
+                        src={'/icons/arrowDown.png'}
+                        alt={'Load More'}
+                        className={'button--load-more_icon'}
+                      />
+                      {'Load More'}
+                    </>
+                  </button>
+                  <div ref={loadMoreRef} className={'trigger--load-more'}></div>
                 </>
-              </button>
-              <div ref={loadMoreRef} className={'trigger--load-more'}></div>
+              )}
             </>
           )}
         </>
