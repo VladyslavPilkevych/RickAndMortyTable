@@ -1,7 +1,7 @@
 import React from 'react';
-import StatusTag from '../StatusTag';
-import { checkUnknown } from '../../utils/checkUnknown';
 import './CharacterInfo.css';
+import { checkUnknown } from '../../../../utils/checkUnknown';
+import StatusTag from '../../../../components/StatusTag';
 
 interface CharacterInfoProps {
   character: {

@@ -1,12 +1,12 @@
 import React from 'react';
+import './CharacterDetailsPage.css';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
-import './CharacterDetailsPage.css';
 import { fetchCharacterWithEpisodes } from '../../utils/fetchCharacterWithEpisodes';
 import ErrorMessage from '../../components/ErrorMessage';
 import Loader from '../../components/Loader';
-import CharacterInfo from '../../components/CharacterInfo';
-import EpisodeList from '../../components/EpisodeList';
+import CharacterInfo from './components/CharacterInfo';
+import EpisodeList from './components/EpisodeList';
 import Button from '../../components/Button/Button';
 
 const CharacterDetailsPage: React.FC = () => {

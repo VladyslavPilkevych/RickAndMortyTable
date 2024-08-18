@@ -1,10 +1,11 @@
 import React from 'react';
 import './TableRow.css';
-import { ICharacterDataParsed } from '../../types';
 import { Link } from 'react-router-dom';
-import { formatDate } from '../../utils/formatDate';
-import { checkUnknown } from '../../utils/checkUnknown';
-import StatusTag from '../StatusTag';
+import StatusTag from '../../../../components/StatusTag';
+import { checkUnknown } from '../../../../utils/checkUnknown';
+import { formatDate } from '../../../../utils/formatDate';
+import { ICharacterDataParsed } from '../../../../types';
+
 
 interface ITableRowProps {
   characterData: ICharacterDataParsed;
@@ -21,23 +22,6 @@ const TableRow = (props: ITableRowProps) => {
     origin,
     image,
   } = props?.characterData;
-  const renderCellStatus = (value: string) => {
-    return value !== 'Unknown' && value !== 'unknown' ? (
-      <span
-        className={`status__indicator ${
-          status === 'Dead'
-            ? 'status__indicator--dead'
-            : 'status__indicator--alive'
-        }`}
-      >
-        {value}
-      </span>
-    ) : (
-      <span className={'status__indicator status__indicator--unknown'}>
-        {'Unknown'}
-      </span>
-    );
-  };
 
   return (
     <tr className={'table__row'}>

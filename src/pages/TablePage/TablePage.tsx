@@ -1,15 +1,15 @@
 import React from 'react';
-import Table from '../../components/Table';
 import './TablePage.css';
-import { useCharactersData } from '../../hooks/useCharactersData';
-import { ICharacterDataParsed } from '../../types';
-import TableRow from '../../components/TableRow';
-import ErrorMessage from '../../components/ErrorMessage';
-import Loader from '../../components/Loader';
+import Table from '../../components/Table';
 import { useLoadMore } from '../../hooks/useLoadMore';
 import { useIntersectionObserver } from '../../hooks/useIntersectionObserver';
-import { parseValuesFromBE } from '../../utils/parseValuesFromBE';
+import { useCharactersData } from '../../hooks/useCharactersData';
 import { useDebounce } from '../../hooks/useDebounce';
+import { parseValuesFromBE } from '../../utils/parseValuesFromBE';
+import ErrorMessage from '../../components/ErrorMessage';
+import { ICharacterDataParsed } from '../../types';
+import Loader from '../../components/Loader';
+import TableRow from './components/TableRow';
 import Button from '../../components/Button/Button';
 
 const TablePage: React.FC = () => {
