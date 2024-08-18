@@ -1,5 +1,8 @@
 <h1>Rick and Morty Character Table</h1>
 
+<h2>Deployment</h2>
+<p>The project is deployed and can be accessed at the following <a href="https://main--rickandmortytable.netlify.app/" target="_blank" rel="noopener noreferrer">URL</a>.</p>
+
 <h2>Overview</h2>
 <p>
     This project is a React application that displays a table of Rick and Morty characters using the 
