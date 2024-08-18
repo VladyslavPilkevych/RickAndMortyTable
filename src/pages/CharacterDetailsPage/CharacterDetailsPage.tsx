@@ -7,6 +7,7 @@ import ErrorMessage from '../../components/ErrorMessage';
 import Loader from '../../components/Loader';
 import CharacterInfo from '../../components/CharacterInfo';
 import EpisodeList from '../../components/EpisodeList';
+import Button from '../../components/Button/Button';
 
 const CharacterDetailsPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -29,14 +30,14 @@ const CharacterDetailsPage: React.FC = () => {
     <>
       {isLoading && <Loader />}
       <div className={'character__details montserrat'}>
-        <button className={'button--back'} onClick={onBackNavigate}>
-          <img
-            src={'/icons/arrowLeft.png'}
-            alt={'Load More'}
-            className={'button--back-icon'}
-          />
+        <Button
+          onClick={onBackNavigate}
+          className={'button--back'}
+          iconSrc={'/icons/arrowLeft.png'}
+          iconAlt={'Back'}
+        >
           {'Back'}
-        </button>
+        </Button>
         {data && (
           <div className={'character-block'}>
             <CharacterInfo character={data.character} />

@@ -10,6 +10,7 @@ import { useLoadMore } from '../../hooks/useLoadMore';
 import { useIntersectionObserver } from '../../hooks/useIntersectionObserver';
 import { parseValuesFromBE } from '../../utils/parseValuesFromBE';
 import { useDebounce } from '../../hooks/useDebounce';
+import Button from '../../components/Button/Button';
 
 const TablePage: React.FC = () => {
   const [ids, setIds] = React.useState<number[]>([1, 2, 3, 4, 5]);
@@ -31,7 +32,9 @@ const TablePage: React.FC = () => {
         console.log(charactersData, data, hasMore);
         setCharactersData((prevData) => {
           const existingIds = new Set(prevData.map((item) => item.id));
-          const newData = parsedData.filter((item) => !existingIds.has(item.id));
+          const newData = parsedData.filter(
+            (item) => !existingIds.has(item.id)
+          );
           const updatedData = [...prevData, ...newData];
           sessionStorage.setItem('tableItems', JSON.stringify(updatedData));
           return updatedData;
@@ -77,19 +80,14 @@ const TablePage: React.FC = () => {
             <>
               {hasMore && (
                 <>
-                  <button
-                    className={'button--load-more'}
+                  <Button
                     onClick={loadMoreCharacters}
+                    className={'button--load-more'}
+                    iconSrc={'/icons/arrowDown.png'}
+                    iconAlt={'Load More'}
                   >
-                    <>
-                      <img
-                        src={'/icons/arrowDown.png'}
-                        alt={'Load More'}
-                        className={'button--load-more_icon'}
-                      />
-                      {'Load More'}
-                    </>
-                  </button>
+                    {'Load More'}
+                  </Button>
                   <div ref={loadMoreRef} className={'trigger--load-more'}></div>
                 </>
               )}
