@@ -25,6 +25,11 @@ const CharacterDetailsPage: React.FC = () => {
       )}
       <div className={'character__details montserrat'}>
         <button className={'button--back'} onClick={() => navigate(-1)}>
+          <img
+            src={'/icons/arrowLeft.png'}
+            alt={'Load More'}
+            className={'button--back-icon'}
+          />
           {'Back'}
         </button>
         <div className={'character-block'}>
@@ -45,10 +50,38 @@ const CharacterDetailsPage: React.FC = () => {
                   </span>
                 </div>
               </div>
-              <p>{data?.character?.gender}</p>
-              <p>{data?.character?.species}</p>
-              <p>{data?.character?.origin?.name}</p>
-              <p>{data?.character?.location?.name}</p>
+              <div className={"character__info-item"}>
+                <img
+                  src={"/icons/gender.png"}
+                  alt={"Gender"}
+                  className={"character__info-icon"}
+                />
+                <p>{data?.character?.gender}</p>
+              </div>
+              <div className={"character__info-item"}>
+                <img
+                  src={"/icons/dna.png"}
+                  alt={"Species"}
+                  className={"character__info-icon"}
+                />
+                <p>{data?.character?.species}</p>
+              </div>
+              <div className={"character__info-item"}>
+                <img
+                  src={"/icons/globe.png"}
+                  alt={"Origin"}
+                  className={"character__info-icon"}
+                />
+                <p>{data?.character?.origin?.name}</p>
+              </div>
+              <div className={"character__info-item"}>
+                <img
+                  src={"/icons/pin.png"}
+                  alt={"Location"}
+                  className={"character__info-icon"}
+                />
+                <p>{data?.character?.location?.name}</p>
+              </div>
             </div>
           </div>
           <div className={'episodes__section'}>

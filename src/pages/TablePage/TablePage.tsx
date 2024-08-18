@@ -9,9 +9,9 @@ import { parseValuesFromBE } from '../../utils/parseValuesFromBE';
 
 const TablePage: React.FC = () => {
   const [ids, setIds] = React.useState<number[]>([1, 2, 3, 4, 5]);
-  const [charactersData, setCharactersData] = React.useState<ICharacterDataParsed[]>(
-    []
-  );
+  const [charactersData, setCharactersData] = React.useState<
+    ICharacterDataParsed[]
+  >([]);
   const loadMoreRef = React.useRef<HTMLDivElement | null>(null);
 
   const { data, isLoading, isError } = useQuery({
@@ -25,7 +25,10 @@ const TablePage: React.FC = () => {
     if (storedData) {
       const parsedDataFromBE: ICharacterDataParsed[] = JSON.parse(storedData);
       setCharactersData(parsedDataFromBE);
-      const nextIds = Array.from({ length: 5 }, (_, i) => parsedDataFromBE?.length);
+      const nextIds = Array.from(
+        { length: 5 },
+        (_, i) => parsedDataFromBE?.length
+      );
       setIds((prevIds) => [...prevIds, ...nextIds]);
     }
   }, []);
@@ -36,7 +39,10 @@ const TablePage: React.FC = () => {
       setCharactersData((prevData) => {
         const existingIds = new Set(prevData.map((item) => item.id));
         const newData = parsedData.filter((item) => !existingIds.has(item.id));
-        sessionStorage.setItem('tableItems', JSON.stringify([...prevData, ...newData]));
+        sessionStorage.setItem(
+          'tableItems',
+          JSON.stringify([...prevData, ...newData])
+        );
         return [...prevData, ...newData];
       });
     }
@@ -103,9 +109,20 @@ const TablePage: React.FC = () => {
         onClick={loadMoreCharacters}
         disabled={isLoading || isError}
       >
-        {isLoading ? 'Loading' : 'Load More'}
+        {isLoading ? (
+          <>{'Loading'}</>
+        ) : (
+          <>
+            <img
+              src={'/icons/arrowDown.png'}
+              alt={'Load More'}
+              className={'button--load-more_icon'}
+            />
+            {'Load More'}
+          </>
+        )}
       </button>
-      <div ref={loadMoreRef} className={'trigger--load-more'}></div>
+      {/* <div ref={loadMoreRef} className={'trigger--load-more'}></div> */}
     </div>
   );
 };
