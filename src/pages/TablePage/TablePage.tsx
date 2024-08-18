@@ -75,6 +75,10 @@ const TablePage: React.FC = () => {
     };
   }, [loadMoreCharacters, isLoading, isError]);
 
+  const handleRefresh = () => {
+    window.location.reload();
+  };
+
   return (
     <div className={'page__table-container'}>
       <Table<ICharacterDataParsed>
@@ -92,37 +96,42 @@ const TablePage: React.FC = () => {
           <TableRow key={item.id} characterData={item} />
         )}
       />
-      {isError && (
-        <div className={'container'}>
+      {isError ? (
+        <div className={'error__container'}>
           <div className={'message--error'}>
-            <span className={'icon--error'}></span>
-            {'Something went wrong. Please try again later.'}
+            <span className={'icon--error'}>
+              {'Something went wrong. Please try again later.'}
+            </span>
+            <button onClick={handleRefresh}>{'Refresh page'}</button>
           </div>
         </div>
+      ) : (
+        <>
+          <button
+            className={`button--load-more ${
+              isLoading
+                ? 'button--load-more_loading'
+                : 'button--load-more_not-loading'
+            }`}
+            onClick={loadMoreCharacters}
+            disabled={isLoading}
+          >
+            {isLoading ? (
+              <>{'Loading'}</>
+            ) : (
+              <>
+                <img
+                  src={'/icons/arrowDown.png'}
+                  alt={'Load More'}
+                  className={'button--load-more_icon'}
+                />
+                {'Load More'}
+              </>
+            )}
+          </button>
+          {/* <div ref={loadMoreRef} className={'trigger--load-more'}></div> */}
+        </>
       )}
-      <button
-        className={`button--load-more ${
-          isLoading
-            ? 'button--load-more_loading'
-            : 'button--load-more_not-loading'
-        }`}
-        onClick={loadMoreCharacters}
-        disabled={isLoading || isError}
-      >
-        {isLoading ? (
-          <>{'Loading'}</>
-        ) : (
-          <>
-            <img
-              src={'/icons/arrowDown.png'}
-              alt={'Load More'}
-              className={'button--load-more_icon'}
-            />
-            {'Load More'}
-          </>
-        )}
-      </button>
-      {/* <div ref={loadMoreRef} className={'trigger--load-more'}></div> */}
     </div>
   );
 };

@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import './CharacterDetailsPage.css';
 import { fetchCharacterWithEpisodes } from '../../utils/fetchCharacterWithEpisodes';
+import { checkUnknown } from '../../utils/checkUnknown';
 
 const CharacterDetailsPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -15,11 +16,18 @@ const CharacterDetailsPage: React.FC = () => {
 
   return (
     <>
+      {isLoading && (
+        <div className={'loading-container'}>
+          <div className={'loading-spinner'}></div>
+        </div>
+      )}
       {isError && (
-        <div className={'section__container'}>
+        <div className={'error__container'}>
           <div className={'message--error'}>
-            <span className={'icon--error'}></span>
-            {'Something went wrong. Please try again later.'}
+            <span className={'icon--error'}>
+              {'Something went wrong. Please try again later.'}
+            </span>
+            <button onClick={() => navigate(-1)}>{'Back to home page'}</button>
           </div>
         </div>
       )}
@@ -50,37 +58,37 @@ const CharacterDetailsPage: React.FC = () => {
                   </span>
                 </div>
               </div>
-              <div className={"character__info-item"}>
+              <div className={'character__info-item'}>
                 <img
-                  src={"/icons/gender.png"}
-                  alt={"Gender"}
-                  className={"character__info-icon"}
+                  src={'/icons/gender.png'}
+                  alt={'Gender'}
+                  className={'character__info-icon'}
                 />
-                <p>{data?.character?.gender}</p>
+                <p>{checkUnknown(data?.character?.gender)}</p>
               </div>
-              <div className={"character__info-item"}>
+              <div className={'character__info-item'}>
                 <img
-                  src={"/icons/dna.png"}
-                  alt={"Species"}
-                  className={"character__info-icon"}
+                  src={'/icons/dna.png'}
+                  alt={'Species'}
+                  className={'character__info-icon'}
                 />
-                <p>{data?.character?.species}</p>
+                <p>{checkUnknown(data?.character?.species)}</p>
               </div>
-              <div className={"character__info-item"}>
+              <div className={'character__info-item'}>
                 <img
-                  src={"/icons/globe.png"}
-                  alt={"Origin"}
-                  className={"character__info-icon"}
+                  src={'/icons/globe.png'}
+                  alt={'Origin'}
+                  className={'character__info-icon'}
                 />
-                <p>{data?.character?.origin?.name}</p>
+                <p>{checkUnknown(data?.character?.origin?.name)}</p>
               </div>
-              <div className={"character__info-item"}>
+              <div className={'character__info-item'}>
                 <img
-                  src={"/icons/pin.png"}
-                  alt={"Location"}
-                  className={"character__info-icon"}
+                  src={'/icons/pin.png'}
+                  alt={'Location'}
+                  className={'character__info-icon'}
                 />
-                <p>{data?.character?.location?.name}</p>
+                <p>{checkUnknown(data?.character?.location?.name)}</p>
               </div>
             </div>
           </div>

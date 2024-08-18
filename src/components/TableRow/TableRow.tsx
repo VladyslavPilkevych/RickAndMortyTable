@@ -3,6 +3,7 @@ import './TableRow.css';
 import { ICharacterDataParsed } from '../../types';
 import { Link } from 'react-router-dom';
 import { formatDate } from '../../utils/formatDate';
+import { checkUnknown } from '../../utils/checkUnknown';
 
 interface ITableRowProps {
   characterData: ICharacterDataParsed;
@@ -19,15 +20,6 @@ const TableRow = (props: ITableRowProps) => {
     origin,
     image,
   } = props?.characterData;
-  const renderCell = (value?: string) => {
-    return value !== 'Unknown' && value !== 'unknown' ? (
-      value
-    ) : (
-      <span className={'status__indicator status__indicator--unknown'}>
-        {'Unknown'}
-      </span>
-    );
-  };
   const renderCellStatus = (value: string) => {
     return value !== 'Unknown' && value !== 'unknown' ? (
       <span
@@ -53,10 +45,10 @@ const TableRow = (props: ITableRowProps) => {
         {name}
       </td>
       <td>{renderCellStatus(status)}</td>
-      <td>{renderCell(gender)}</td>
-      <td>{renderCell(species)}</td>
-      <td>{renderCell(formatDate(date))}</td>
-      <td>{renderCell(origin)}</td>
+      <td>{checkUnknown(gender)}</td>
+      <td>{checkUnknown(species)}</td>
+      <td>{checkUnknown(formatDate(date))}</td>
+      <td>{checkUnknown(origin)}</td>
       <td className={'link--detail'}>
         <Link to={`/character/${id}`}>{'Link'}</Link>
       </td>
