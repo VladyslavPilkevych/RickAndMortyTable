@@ -23,13 +23,19 @@ const TablePage: React.FC = () => {
   const { data, isLoading, isError } = useCharactersData(ids);
 
   React.useEffect(() => {
+    const storedData = sessionStorage.getItem('tableItems');
+    if (storedData) {
+      setCharactersData(JSON.parse(storedData));
+    }
+  }, []);
+
+  React.useEffect(() => {
     if (data) {
       if (data.length === 0) {
         setHasMore(false);
       } else {
         setHasMore(true);
         const parsedData = parseValuesFromBE(data);
-        console.log(charactersData, data, hasMore);
         setCharactersData((prevData) => {
           const existingIds = new Set(prevData.map((item) => item.id));
           const newData = parsedData.filter(
