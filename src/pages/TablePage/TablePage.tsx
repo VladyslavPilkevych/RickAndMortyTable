@@ -6,6 +6,8 @@ import { fetchCharactersByIds } from '../../api/fetchCharactersByIds';
 import { ICharacterDataParsed } from '../../types';
 import TableRow from '../../components/TableRow';
 import { parseValuesFromBE } from '../../utils/parseValuesFromBE';
+import ErrorMessage from '../../components/ErrorMessage';
+import Loader from '../../components/Loader';
 
 const TablePage: React.FC = () => {
   const [ids, setIds] = React.useState<number[]>([1, 2, 3, 4, 5]);
@@ -97,39 +99,29 @@ const TablePage: React.FC = () => {
         )}
       />
       {isError ? (
-        <div className={'error__container'}>
-          <div className={'message--error'}>
-            <span className={'icon--error'}>
-              {'Something went wrong. Please try again later.'}
-            </span>
-            <button onClick={handleRefresh}>{'Refresh page'}</button>
-          </div>
-        </div>
+        <ErrorMessage btnText={'Refresh page'} onClickBtn={handleRefresh} />
       ) : (
         <>
-          <button
-            className={`button--load-more ${
-              isLoading
-                ? 'button--load-more_loading'
-                : 'button--load-more_not-loading'
-            }`}
-            onClick={loadMoreCharacters}
-            disabled={isLoading}
-          >
-            {isLoading ? (
-              <>{'Loading'}</>
-            ) : (
-              <>
-                <img
-                  src={'/icons/arrowDown.png'}
-                  alt={'Load More'}
-                  className={'button--load-more_icon'}
-                />
-                {'Load More'}
-              </>
-            )}
-          </button>
-          {/* <div ref={loadMoreRef} className={'trigger--load-more'}></div> */}
+          {isLoading ? (
+            <Loader />
+          ) : (
+            <>
+              <button
+                className={'button--load-more'}
+                onClick={loadMoreCharacters}
+              >
+                <>
+                  <img
+                    src={'/icons/arrowDown.png'}
+                    alt={'Load More'}
+                    className={'button--load-more_icon'}
+                  />
+                  {'Load More'}
+                </>
+              </button>
+              <div ref={loadMoreRef} className={'trigger--load-more'}></div>
+            </>
+          )}
         </>
       )}
     </div>

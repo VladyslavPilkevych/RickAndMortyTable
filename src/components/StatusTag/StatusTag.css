@@ -1,0 +1,45 @@
+.status__indicator {
+    position: relative;
+    display: inline-block;
+    background: none;
+    font-size: 14px;
+    font-weight: bold;
+    border-radius: 4px;
+    color: #000000cc;
+    padding: 8px 12px 8px 30px;
+    line-height: 20px;
+}
+
+.status__indicator::before {
+    position: absolute;
+    left: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #000000cc;
+    font-size: 16px;
+    line-height: 0;
+}
+
+.status__indicator--alive {
+    background-color: #67ef7b;
+}
+
+.status__indicator--alive::before {
+    content: '\2713';
+}
+
+.status__indicator--dead {
+    background-color: #fb6f6d;
+}
+
+.status__indicator--dead::before {
+    content: '\2717';
+}
+
+.status__indicator--unknown {
+    background-color: #424345;
+}
+
+.status__indicator--unknown::before {
+    content: '\003F';
+}

@@ -4,6 +4,9 @@ import { useQuery } from '@tanstack/react-query';
 import './CharacterDetailsPage.css';
 import { fetchCharacterWithEpisodes } from '../../utils/fetchCharacterWithEpisodes';
 import { checkUnknown } from '../../utils/checkUnknown';
+import ErrorMessage from '../../components/ErrorMessage';
+import Loader from '../../components/Loader';
+import StatusTag from '../../components/StatusTag';
 
 const CharacterDetailsPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -14,25 +17,19 @@ const CharacterDetailsPage: React.FC = () => {
     queryFn: () => fetchCharacterWithEpisodes(Number(id)),
   });
 
+  const onBackNavigate = () => navigate(-1);
+
+  if (isError) {
+    return (
+      <ErrorMessage btnText={'Back to home page'} onClickBtn={onBackNavigate} />
+    );
+  }
+
   return (
     <>
-      {isLoading && (
-        <div className={'loading-container'}>
-          <div className={'loading-spinner'}></div>
-        </div>
-      )}
-      {isError && (
-        <div className={'error__container'}>
-          <div className={'message--error'}>
-            <span className={'icon--error'}>
-              {'Something went wrong. Please try again later.'}
-            </span>
-            <button onClick={() => navigate(-1)}>{'Back to home page'}</button>
-          </div>
-        </div>
-      )}
+      {isLoading && <Loader />}
       <div className={'character__details montserrat'}>
-        <button className={'button--back'} onClick={() => navigate(-1)}>
+        <button className={'button--back'} onClick={onBackNavigate}>
           <img
             src={'/icons/arrowLeft.png'}
             alt={'Load More'}
@@ -51,11 +48,7 @@ const CharacterDetailsPage: React.FC = () => {
               <div className={'character__name-block'}>
                 <h1>{data?.character?.name}</h1>
                 <div>
-                  <span
-                    className={`status__indicator status__indicator--${data?.character?.status?.toLowerCase()}`}
-                  >
-                    {data?.character?.status}
-                  </span>
+                  <StatusTag status={data?.character?.status ?? ""} />
                 </div>
               </div>
               <div className={'character__info-item'}>

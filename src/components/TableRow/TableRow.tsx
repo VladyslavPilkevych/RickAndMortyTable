@@ -4,6 +4,7 @@ import { ICharacterDataParsed } from '../../types';
 import { Link } from 'react-router-dom';
 import { formatDate } from '../../utils/formatDate';
 import { checkUnknown } from '../../utils/checkUnknown';
+import StatusTag from '../StatusTag';
 
 interface ITableRowProps {
   characterData: ICharacterDataParsed;
@@ -44,7 +45,9 @@ const TableRow = (props: ITableRowProps) => {
         <img src={image} alt={name} className={'avatar__image'} />
         {name}
       </td>
-      <td>{renderCellStatus(status)}</td>
+      <td>
+        <StatusTag status={status} />
+      </td>
       <td>{checkUnknown(gender)}</td>
       <td>{checkUnknown(species)}</td>
       <td>{checkUnknown(formatDate(date))}</td>
