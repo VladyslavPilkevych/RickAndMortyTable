@@ -1,8 +1,8 @@
-.table-container {
+.table__container {
     width: 100%;
-    overflow-x: auto;
     overflow: visible;
     overflow-y: visible;
+    overflow-x: auto;
 }
 
 #table {
