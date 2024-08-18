@@ -20,7 +20,6 @@ export const sortByField = <T>(
   sortOrder: SortOrderType
 ): T[] => {
   if (!sortKey || !sortOrder) return data;
-  console.log(data, sortKey, sortOrder);
   return [...data].sort((a, b) => {
     const valueA = a[sortKey];
     const valueB = b[sortKey];
