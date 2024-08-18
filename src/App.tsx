@@ -5,6 +5,15 @@ import './App.css';
 import AppRoutes from './Routes/Routes';
 
 function App() {
+  React.useEffect(() => {
+    const clearSessionStorage = () => {
+      sessionStorage.clear();
+    };
+    window.addEventListener('beforeunload', clearSessionStorage);
+    return () => {
+      window.removeEventListener('beforeunload', clearSessionStorage);
+    };
+  }, []);
   return (
     <div className={'root'}>
       <AppRoutes />
