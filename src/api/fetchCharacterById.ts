@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { ICharacterData } from '../types';
+import { ICharacterData } from '../types/types';
 
 export const fetchCharacterById = async (
   id: number

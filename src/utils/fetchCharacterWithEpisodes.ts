@@ -1,4 +1,4 @@
-import { ICharacterData } from '../types';
+import { ICharacterData } from '../types/types';
 import { fetchCharacterById } from '../api/fetchCharacterById';
 import { fetchMultiplyEpisodesByIds } from '../api/fetchMultiplyEpisodesByIds';
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import './Table.css';
-import { SortOrderType, SortOrderEnum } from '../../types';
+import { SortOrderType, SortOrderEnum } from '../../types/types';
 import { sortByField } from '../../utils/sortUtils';
 
 interface IColumnProps<T> {

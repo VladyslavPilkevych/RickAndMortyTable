@@ -7,7 +7,7 @@ import { useCharactersData } from '../../hooks/useCharactersData';
 import { useDebounce } from '../../hooks/useDebounce';
 import { parseValuesFromBE } from '../../utils/parseValuesFromBE';
 import ErrorMessage from '../../components/ErrorMessage';
-import { ICharacterDataParsed } from '../../types';
+import { ICharacterDataParsed } from '../../types/types';
 import Loader from '../../components/Loader';
 import TableRow from './components/TableRow';
 import Button from '../../components/Button/Button';

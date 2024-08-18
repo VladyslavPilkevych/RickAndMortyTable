@@ -1,4 +1,4 @@
-import { SortOrderEnum, SortOrderType } from '../types';
+import { SortOrderEnum, SortOrderType } from '../types/types';
 
 const compareValues = <T>(a: T, b: T, sortOrder: SortOrderType): number => {
   const isValueAUnknown = a === 'unknown' || a === 'Unknown';

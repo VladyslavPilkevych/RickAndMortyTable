@@ -1,6 +1,6 @@
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import { fetchCharactersByIds } from '../api/fetchCharactersByIds';
-import { ICharacterData } from '../types';
+import { ICharacterData } from '../types/types';
 
 export const useCharactersData = (ids: number[]) => {
   return useQuery<ICharacterData[]>({

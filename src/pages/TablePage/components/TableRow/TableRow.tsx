@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import StatusTag from '../../../../components/StatusTag';
 import { checkUnknown } from '../../../../utils/checkUnknown';
 import { formatDate } from '../../../../utils/formatDate';
-import { ICharacterDataParsed } from '../../../../types';
+import { ICharacterDataParsed } from '../../../../types/types';
 
 
 interface ITableRowProps {

@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { IEpisodeData } from '../types';
+import { IEpisodeData } from '../types/types';
 
 export const fetchMultiplyEpisodesByIds = async (
   ids: number[]

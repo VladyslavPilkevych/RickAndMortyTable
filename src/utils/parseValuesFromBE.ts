@@ -1,4 +1,4 @@
-import { ICharacterData, ICharacterDataParsed } from '../types';
+import { ICharacterData, ICharacterDataParsed } from '../types/types';
 
 export const parseValuesFromBE = (
   responseArray: ICharacterData[]
