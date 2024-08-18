@@ -7,6 +7,8 @@ export const useIntersectionObserver = (
   isError: boolean
 ) => {
   useEffect(() => {
+    const currentRef = loadMoreRef.current;
+
     const observer = new IntersectionObserver(
       (entries) => {
         if (entries[0].isIntersecting && !isLoading && !isError) {
@@ -16,13 +18,13 @@ export const useIntersectionObserver = (
       { threshold: 1.0 }
     );
 
-    if (loadMoreRef.current) {
-      observer.observe(loadMoreRef.current);
+    if (currentRef) {
+      observer.observe(currentRef);
     }
 
     return () => {
-      if (loadMoreRef.current) {
-        observer.unobserve(loadMoreRef.current);
+      if (currentRef) {
+        observer.unobserve(currentRef);
       }
     };
   }, [loadMoreRef, loadMore, isLoading, isError]);
