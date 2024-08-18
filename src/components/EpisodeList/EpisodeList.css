@@ -1,0 +1,30 @@
+.episodes__section {
+    margin-top: 20px;
+    width: 100%;
+}
+
+.episodes__section h2 {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+}
+
+.episodes__section h2 span {
+    background-color: #0d8cd2;
+    padding: 4px 8px;
+    border-radius: 8px;
+    margin-left: 10px;
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: 2px;
+}
+
+.episodes__list {
+    margin-top: 36px;
+    list-style: none;
+    padding: 0;
+    font-size: 1.1em;
+    font-weight: 300;
+    line-height: 1.75em;
+}
