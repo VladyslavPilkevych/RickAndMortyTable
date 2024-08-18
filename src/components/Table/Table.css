@@ -1,0 +1,112 @@
+.table__container {
+    width: 100%;
+    overflow: visible;
+}
+
+#table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
+    color: #ffffff;
+    min-width: 600px;
+}
+
+th,
+td {
+    padding: 0.75rem 1rem;
+    text-align: left;
+}
+
+th {
+    text-transform: uppercase;
+    font-size: 14px;
+    border-bottom: 1px solid #424345;
+}
+
+.table-headers__button {
+    cursor: pointer;
+    position: relative;
+    display: inline-block;
+    border: none;
+    background: none;
+    vertical-align: middle;
+    font-family: 'Oswald', sans-serif;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 19px;
+    letter-spacing: 0.2em;
+    padding: 0.5rem 2rem 0.5rem 0;
+    color: #bcbdbd;
+}
+
+.table__headers th p {
+    cursor: default;
+}
+
+.table__headers th button::after {
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #424345;
+    font-size: 16px;
+    line-height: 0;
+    color: #858585;
+    content: '\25BC';
+}
+
+.table__headers th:not(:last-child) button.asc::after {
+    content: "\25B2";
+    color: #FFFFFF;
+}
+
+.table__headers th:not(:last-child) button.desc::after {
+    content: "\25BC";
+    color: #FFFFFF;
+}
+
+.active-filter {
+    color: #ffffff;
+}
+
+@media (max-width: 1024px) {
+    #table {
+        font-size: 13px;
+    }
+    th,
+    td {
+        padding: 10px 12px;
+    }
+    .table-headers__button {
+        padding: 6px 24px 6px 0;
+    }
+    .avatar {
+        width: 35px;
+    }
+}
+
+@media (max-width: 768px) {
+    .table__container {
+        overflow-x: auto;
+    }
+    #table {
+        font-size: 11px;
+    }
+    th,
+    td {
+        padding: 8px 10px;
+    }
+    .table-headers__button {
+        padding: 5px 20px 5px 0;
+    }
+    .avatar {
+        width: 30px;
+    }
+}
+
+@media (max-width: 600px) {
+    #table {
+        min-width: 600px;
+    }
+}

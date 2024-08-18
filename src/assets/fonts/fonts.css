@@ -1,0 +1,13 @@
+@font-face {
+    font-family: 'Montserrat';
+    src: url('./Montserrat/Montserrat-VariableFont_wght.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Oswald';
+    src: url('./Oswald/Oswald-VariableFont_wght.ttf') format('truetype');
+    font-weight: bold;
+    font-style: normal;
+}
