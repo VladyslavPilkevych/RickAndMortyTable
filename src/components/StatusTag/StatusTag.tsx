@@ -16,4 +16,4 @@ const StatusTag = (props: IStatusTagProps) => {
   );
 };
 
-export default React.memo(StatusTag);
+export default StatusTag;

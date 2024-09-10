@@ -23,4 +23,4 @@ const ErrorMessage = (props: IErrorMessageProps) => {
   );
 };
 
-export default React.memo(ErrorMessage);
+export default ErrorMessage;

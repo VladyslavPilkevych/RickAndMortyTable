@@ -39,8 +39,10 @@
 
 .status__indicator--unknown {
     background-color: #424345;
+    color: #BCBDBD;
 }
 
 .status__indicator--unknown::before {
     content: '\003F';
+    color: #BCBDBD;
 }

@@ -7,7 +7,6 @@ interface IColumnProps<T> {
   header: string;
   accessor: keyof T;
   isSortable: boolean;
-  // renderCell?: (item: T) => React.ReactNode;
 }
 
 interface ITableProps<T> {
